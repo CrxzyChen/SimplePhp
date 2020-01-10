@@ -8,7 +8,6 @@
 
 namespace SimplePhp;
 
-
 class Exception extends \Exception
 {
     public static function error_handler($errno, $errstr, $errfile, $errline)

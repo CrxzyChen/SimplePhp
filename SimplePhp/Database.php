@@ -17,6 +17,6 @@ class Database
     public function __construct($driver)
     {
         $class = new \ReflectionClass("Drivers\\$driver");
-        $this->conn = $class->newInstance();
+        $this->conn = $this->conn = $class->newInstance();
     }
 }

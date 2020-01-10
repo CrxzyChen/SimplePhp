@@ -10,5 +10,10 @@ namespace Models;
 
 class ModelBase
 {
+    private $database;
 
+    public function __construct()
+    {
+        $this->database = new \SimplePhp\Database("MongoDB");
+    }
 }
