@@ -25,7 +25,12 @@ class Exception extends \Exception
             foreach ($e->getTrace() as $trace) {
                 echo "      file:{$trace["file"]} line:{$trace["line"]} function: {$trace["class"]}{$trace["type"]}{$trace["function"]}()  args:" . json_encode($trace["args"]) . "<br>";
             };
-
         }
+    }
+
+    public static function autoload_register($class)
+    {
+        $class_path = str_replace('\\', DIRECTORY_SEPARATOR, $class);
+        require_once LOCAL_ROOT . DIRECTORY_SEPARATOR . "$class_path.php";
     }
 }

@@ -21,7 +21,7 @@ if (!file_exists(SIMPLEPHP_DIR . DIRECTORY_SEPARATOR . "Exception.php")) {
 
 set_error_handler("\SimplePhp\Exception::error_handler", E_ALL);
 set_exception_handler("\SimplePhp\Exception::exception_handler");
-
+spl_autoload_register("\SimplePhp\Exception::autoload_register");
 //load config.json
 if (!file_exists(LOCAL_ROOT . DIRECTORY_SEPARATOR . "config.json")) {
     throw new \SimplePhp\Exception("config.json is not exist! config.json: " . LOCAL_ROOT . DIRECTORY_SEPARATOR . "config.json");
@@ -30,7 +30,4 @@ if (!file_exists(LOCAL_ROOT . DIRECTORY_SEPARATOR . "config.json")) {
     require_once SIMPLEPHP_DIR . DIRECTORY_SEPARATOR . "Config.php";
 }
 
-$model = $_GET["model"];
-$methods = $_GET["methods"];
-$args = $_GET["args"];
-print_r($_GET);
+new \SimplePhp\Database("MongoDB");

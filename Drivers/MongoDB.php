@@ -7,6 +7,7 @@
  */
 
 namespace Drivers;
+
 class MongoDB
 {
     private $manager;
