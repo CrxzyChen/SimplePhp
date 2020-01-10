@@ -11,12 +11,40 @@ namespace SimplePhp;
 
 class Database
 {
+    private $driver;
 
-    private $conn;
+    public function __construct()
+    {
+        $args = func_get_args();
+        var_dump($args);
+        switch (sizeof($args)) {
+            case 1:
+                $this->Driver($args[0]);
+                break;
+            case 2:
+                $this->Driver($args[0]);
+                $this->Database($args[1]);
+                break;
+        }
+    }
 
-    public function __construct($driver)
+    public function Driver($driver)
     {
         $class = new \ReflectionClass("Drivers\\$driver");
-        $this->conn = $this->conn = $class->newInstance();
+        $instance = $class->newInstance();
+        $this->driver = $instance;
+        return $this;
+    }
+
+    public function Database($database)
+    {
+        $this->driver->setDatabase($database);
+        return $this;
+    }
+
+    public function Collection($collection)
+    {
+        $this->driver->setCollection($collection);
+        return $this->driver;
     }
 }

@@ -29,4 +29,3 @@ if (!file_exists(LOCAL_ROOT . DIRECTORY_SEPARATOR . "config.json")) {
     define("CONFIG_FILE", LOCAL_ROOT . DIRECTORY_SEPARATOR . "config.json");
     require_once SIMPLEPHP_DIR . DIRECTORY_SEPARATOR . "Config.php";
 }
-
