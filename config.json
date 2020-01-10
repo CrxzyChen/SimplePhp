@@ -1,0 +1,13 @@
+{
+  "project_name": "SimplePhp",
+  "version": "0.0.0.1",
+  "database": {
+    "host": "10.0.0.2",
+    "post": "27017",
+    "password": "Crxzy@123520",
+    "username": "admin"
+  },
+  "alias": {
+    "database": "db"
+  }
+}
