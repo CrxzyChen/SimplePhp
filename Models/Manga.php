@@ -9,7 +9,7 @@
 namespace Models;
 
 
-class Manga
+class Manga extends ModelBase
 {
 
 }
