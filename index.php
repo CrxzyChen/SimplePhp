@@ -1,7 +1,7 @@
 <?php
-//header("content-type:text/json");
+header("content-type:text/json");
 
-echo "<pre>";
+//echo "<pre>";
 $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
 
 define("LOCAL_ROOT", $_SERVER["DOCUMENT_ROOT"] . dirname($_SERVER["SCRIPT_NAME"]));
@@ -32,3 +32,8 @@ if (!file_exists(LOCAL_ROOT . DIRECTORY_SEPARATOR . "config.json")) {
     define("CONFIG_FILE", LOCAL_ROOT . DIRECTORY_SEPARATOR . "config.json");
     require_once SIMPLEPHP_DIR . DIRECTORY_SEPARATOR . "Config.php";
 }
+
+$data = $_POST['data'];
+$class = new ReflectionClass("Models\\Manga");
+$instance = $class->newInstance();
+echo $instance->getLastList();

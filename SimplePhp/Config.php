@@ -11,12 +11,13 @@ namespace SimplePhp;
 class  Config
 {
     /**
+     * @param bool $force
      * @return string of config file contents
      * @throws \Exception
      */
-    private static function getConfig()
+    private static function getConfig($force = false)
     {
-        if (isset($_SESSION["SIMPLEPHP_CONFIG"])) { //Judge whether server was recorded config!
+        if (isset($_SESSION["SIMPLEPHP_CONFIG"]) && !$force) { //Judge whether server was recorded config!
             return $_SESSION["SIMPLEPHP_CONFIG"];
         } else {
             $file_contents = file_get_contents(CONFIG_FILE);
@@ -32,12 +33,13 @@ class  Config
 
     /**
      * @param string $key
+     * @param bool $force
      * @return mixed results of config search by $key_source
-     * @throws \Exception
+     * @throws Exception
      */
-    public static function get(string $key)
+    public static function get(string $key, $force = false)
     {
-        $config_json = json_decode(self::getConfig());
+        $config_json = json_decode(self::getConfig($force));
         $key_copy = $key;
         foreach ($config_json->alias as $k => $v) { //use source name to replace the alias
             $key_copy = str_replace($v, $k, $key_copy);
@@ -46,7 +48,11 @@ class  Config
         $config_value = $config_json;
         foreach ($key_arr as $k) {//search the contents of config by key
             if (!property_exists($config_value, $k)) {
-                throw new \Exception("config is not exist! config:$key");
+                try {
+                    return self::get($key, true);
+                } catch (Exception $e) {
+                    throw $e;
+                }
             }
             $config_value = $config_value->$k;
         }
