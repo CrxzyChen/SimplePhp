@@ -37,13 +37,13 @@ class MongoDB implements DatabaseDriver
     /**
      * @param array $query
      * @param array $option
-     * @return array
+     * @return array|bool
      * @throws \MongoDB\Driver\Exception\Exception
      */
     public function find($query = array(), $option = array())
     {
         $query = new \MongoDB\Driver\Query($query, $option);
-        $cursor = $this->manager->executeQuery("scrapy.nhentai", $query);
+        $cursor = $this->manager->executeQuery("$this->database.$this->collection", $query);
         $documents = [];
         foreach ($cursor as $document) {
             $documents[] = $document;
@@ -79,13 +79,30 @@ class MongoDB implements DatabaseDriver
     {
     }
 
+    /**
+     * @param $database
+     */
     public function setDatabase($database)
     {
         $this->database = $database;
     }
 
+    /**
+     * @param $collection
+     */
     public function setCollection($collection)
     {
         $this->collection = $collection;
+    }
+
+    /**
+     * @param $query
+     * @return mixed
+     * @throws \MongoDB\Driver\Exception\Exception
+     */
+    public function find_one($query)
+    {
+        $result = $this->find($query, array("limit" => 1));
+        return $result[0];
     }
 }

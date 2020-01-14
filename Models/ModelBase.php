@@ -8,12 +8,21 @@
 
 namespace Models;
 
-class ModelBase
+abstract class ModelBase
 {
-    private $database;
+    protected $connect;
+    protected $driver;
 
     public function __construct()
     {
-        $this->database = new \SimplePhp\Database("MongoDB");
+        $this->setDriver();
+        $this->connect = new \SimplePhp\Database($this->getDriver());
+    }
+
+    abstract protected function setDriver();
+
+    private function getDriver(): string
+    {
+        return $this->driver;
     }
 }

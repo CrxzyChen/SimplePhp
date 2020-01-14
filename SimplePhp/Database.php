@@ -16,7 +16,6 @@ class Database
     public function __construct()
     {
         $args = func_get_args();
-        var_dump($args);
         switch (sizeof($args)) {
             case 1:
                 $this->Driver($args[0]);
