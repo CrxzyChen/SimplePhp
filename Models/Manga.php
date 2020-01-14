@@ -12,4 +12,8 @@ namespace Models;
 class Manga extends ModelBase
 {
 
+    protected function setDriver()
+    {
+        // TODO: Implement setDriver() method.
+    }
 }
