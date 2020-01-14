@@ -12,4 +12,8 @@ namespace Models;
 class Manga
 {
 
+    protected function setDriver()
+    {
+        // TODO: Implement setDriver() method.
+    }
 }
