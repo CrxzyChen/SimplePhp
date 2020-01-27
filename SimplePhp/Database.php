@@ -13,6 +13,12 @@ class Database
 {
     private $driver;
 
+    /**
+     * Database constructor.
+     * Database([args1,args2,*])
+     * args[0]:set driver
+     * args[1]:set database
+     */
     public function __construct()
     {
         $args = func_get_args();
@@ -27,6 +33,11 @@ class Database
         }
     }
 
+    /**
+     * @param $driver
+     * @return $this
+     * @throws \ReflectionException
+     */
     public function Driver($driver)
     {
         $class = new \ReflectionClass("Drivers\\$driver");
@@ -35,12 +46,20 @@ class Database
         return $this;
     }
 
+    /**
+     * @param $database
+     * @return $this
+     */
     public function Database($database)
     {
         $this->driver->setDatabase($database);
         return $this;
     }
 
+    /**
+     * @param $collection
+     * @return mixed
+     */
     public function Collection($collection)
     {
         $this->driver->setCollection($collection);
