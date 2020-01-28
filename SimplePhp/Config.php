@@ -48,10 +48,10 @@ class  Config
         $config_value = $config_json;
         foreach ($key_arr as $k) {//search the contents of config by key
             if (!property_exists($config_value, $k)) {
-                try {
+                if ($force == true) {
+                    throw new Exception( "Key $key existed in config.json! file:" . LOCAL_ROOT . DIRECTORY_SEPARATOR . "config.json");
+                }else{
                     return self::get($key, true);
-                } catch (Exception $e) {
-                    throw $e;
                 }
             }
             $config_value = $config_value->$k;

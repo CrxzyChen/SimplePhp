@@ -7,7 +7,6 @@ define("LOCAL_ROOT", $_SERVER["DOCUMENT_ROOT"] . dirname($_SERVER["SCRIPT_NAME"]
 define("HTTP_ROOT", $protocol . $_SERVER['HTTP_HOST'] . dirname($_SERVER['REQUEST_URI']));
 define("SIMPLEPHP_DIR", LOCAL_ROOT . DIRECTORY_SEPARATOR . "SimplePhp");
 define("DRIVERS_DIR", LOCAL_ROOT . DIRECTORY_SEPARATOR . "Drivers");
-
 //start session
 if (!isset($_SESSION)) {
     session_start();
@@ -31,6 +30,14 @@ if (!file_exists(LOCAL_ROOT . DIRECTORY_SEPARATOR . "config.json")) {
     define("CONFIG_FILE", LOCAL_ROOT . DIRECTORY_SEPARATOR . "config.json");
     require_once SIMPLEPHP_DIR . DIRECTORY_SEPARATOR . "Config.php";
 }
-var_dump($_GET);
-$gallery = new \Models\Gallery();
-var_dump($gallery->get(array("thumb_id" => (int)$_GET["gallery"])));
+
+if (!isset($_GET["controller"])) {
+    $default_controller = \SimplePhp\Config::get("default.controller");
+    $default_method = \SimplePhp\Config::get("default.controller");
+
+    $controller = new ReflectionClass("Controllers\\$default_controller");
+    $instance = $controller->newInstance();
+
+    if ($controller->hasMethod($default_method))
+        $instance->{$default_method}();
+}

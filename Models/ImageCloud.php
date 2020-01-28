@@ -9,7 +9,7 @@
 namespace Models;
 
 
-class Gallery extends ModelBase
+class ImageCloud extends ModelBase
 {
 
     protected function setDriver()
@@ -20,6 +20,6 @@ class Gallery extends ModelBase
 
     public function get($query)
     {
-        return $this->connect->Database("image_cloud")->Collection("image_pool")->find($query);
+        return $this->connect->Database("image_cloud")->Collection("image_pool")->find_one($query);
     }
 }

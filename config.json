@@ -13,5 +13,9 @@
   },
   "alias": {
     "database": "db"
+  },
+  "default": {
+    "controller": "Index",
+    "method": "Index"
   }
 }
