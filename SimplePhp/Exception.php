@@ -27,6 +27,7 @@ class Exception extends \Exception
                 echo "      file:{$trace["file"]} line:{$trace["line"]} function: {$trace["class"]}{$trace["type"]}{$trace["function"]}()  args:" . json_encode($trace["args"]) . "<br>";
             };
         }
+        exit;
     }
 
     public static function autoload_register($class)

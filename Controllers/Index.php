@@ -11,6 +11,6 @@ namespace Controllers;
 class Index extends ControllerBase
 {
     function Index(){
-        echo 1;
+        return array("a"=>123);
     }
 }

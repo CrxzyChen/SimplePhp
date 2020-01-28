@@ -1,5 +1,4 @@
 <?php
-header("content-type:text/json");
 
 $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
 
@@ -31,13 +30,29 @@ if (!file_exists(LOCAL_ROOT . DIRECTORY_SEPARATOR . "config.json")) {
     require_once SIMPLEPHP_DIR . DIRECTORY_SEPARATOR . "Config.php";
 }
 
+$default_controller = \SimplePhp\Config::get("default.controller", true);
+$default_method = \SimplePhp\Config::get("default.method");
+
 if (!isset($_GET["controller"])) {
-    $default_controller = \SimplePhp\Config::get("default.controller");
-    $default_method = \SimplePhp\Config::get("default.controller");
-
     $controller = new ReflectionClass("Controllers\\$default_controller");
-    $instance = $controller->newInstance();
+} else {
+    $controller = new ReflectionClass("Controllers\\" . $_GET["controller"]);
+}
 
-    if ($controller->hasMethod($default_method))
-        $instance->{$default_method}();
+$instance = $controller->newInstance();
+
+if (isset($_GET["method"])) {
+    $view = $instance->{$_GET["method"]}();
+} else if ($controller->hasMethod($default_method)) {
+    $view = $instance->{$default_method}();
+} else {
+    die("Welcome Simple Vol. " . \SimplePhp\Config::get("version"));
+}
+
+if (is_array($view)) {
+    header("content-type:text/json");
+    echo json_encode($view);
+} else {
+    header("content-type:text/html");
+    echo json_encode($view);
 }
