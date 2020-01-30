@@ -23,8 +23,5 @@ class Index extends ControllerBase
     {
         $image_resource = $this->image_cloud->getImageResource($_GET["gallery"], $_GET["image_name"], $_GET["image_form"]);
         return $image_resource;
-//        header('Content-Type: image/gif');
-//        imagegif($image_resource);
-//        imagedestroy($image_resource);
     }
 }
