@@ -8,18 +8,21 @@
 
 namespace Models;
 
-abstract class ModelBase
+abstract class DBModel
 {
     protected $connect;
     protected $driver;
 
     public function __construct()
     {
+        $this->onCreate();
         $this->setDriver();
         $this->connect = new \SimplePhp\Database($this->getDriver());
     }
 
     abstract protected function setDriver();
+
+    abstract protected function onCreate();
 
     private function getDriver(): string
     {

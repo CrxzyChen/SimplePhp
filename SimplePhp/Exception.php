@@ -17,6 +17,8 @@ class Exception extends \Exception
 
     public static function exception_handler(\Throwable $e)
     {
+        header("content-type:text/html");
+        echo "<pre>";
         echo "Exception: " . $e->getCode() . ' ' . $e->getFile() . ' ' . $e->getLine() . '<br>';
         echo "  Message:" . $e->getMessage() . '<br>';
         if ($e->getTrace()) {
@@ -25,6 +27,7 @@ class Exception extends \Exception
                 echo "      file:{$trace["file"]} line:{$trace["line"]} function: {$trace["class"]}{$trace["type"]}{$trace["function"]}()  args:" . json_encode($trace["args"]) . "<br>";
             };
         }
+        exit;
     }
 
     public static function autoload_register($class)
