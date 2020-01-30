@@ -9,7 +9,12 @@
 namespace Controllers;
 
 
-class ControllerBase
+abstract class ControllerBase
 {
+    abstract protected function onCreate();
 
+    public function __construct()
+    {
+        $this->onCreate();
+    }
 }

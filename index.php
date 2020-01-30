@@ -49,10 +49,32 @@ if (isset($_GET["method"])) {
     die("Welcome Simple Vol. " . \SimplePhp\Config::get("version"));
 }
 
+ob_start();
+
 if (is_array($view)) {
     header("content-type:text/json");
     echo json_encode($view);
+} else if (is_resource($view) && get_resource_type($view) == "gd") {
+    switch ($_GET["image_form"]) {
+        case "jpg":
+            header("content-type:image/jpg");
+            imagejpeg($view);
+            imagedestroy($view);
+            break;
+        case "png":
+            header("content-type:image/png");
+            imagepng($view);
+            imagedestroy($view);
+            break;
+        case "gif":
+            header("content-type:image/gif");
+            imagegif($view);
+            imagedestroy($view);
+            break;
+    }
 } else {
     header("content-type:text/html");
     echo json_encode($view);
 }
+
+ob_end_flush();

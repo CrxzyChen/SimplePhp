@@ -29,7 +29,7 @@ class MongoDB implements DatabaseDriver
         $username = urlencode($this->db_config->username);
         $password = urlencode($this->db_config->password);
 
-        $this->uri = "mongodb://{$username}:{$password}@{$this->db_config->host}:{$this->db_config->post}";
+        $this->uri = "mongodb://{$username}:{$password}@{$this->db_config->host}:{$this->db_config->port}";
         $this->manager = new \MongoDB\Driver\Manager($this->uri);
         $this->bulk = new \MongoDB\Driver\BulkWrite();
     }
